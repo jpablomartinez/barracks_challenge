@@ -4,11 +4,12 @@ import './index.css';
 import Login from './views/login';
 import Register from './views/register';
 import Admin from './views/admin';
+import Home from './views/home';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Admin />
+    <Home />
   </React.StrictMode>,
   document.getElementById('root')
 );

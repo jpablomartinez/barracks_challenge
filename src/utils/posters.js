@@ -1,0 +1,45 @@
+import mask from '../img/assets/the_mask.jpg';
+import epI from '../img/assets/EpI.jpg';
+import epII from '../img/assets/EpII.jpg';
+import epIII from '../img/assets/EpIII.jpg';
+import epIV from '../img/assets/EpIV.jpg';
+import epV from '../img/assets/EpV.jpg';
+import epVI from '../img/assets/EpVI.jpg';
+import stI from '../img/assets/STI.jpg';
+import stII from '../img/assets/STII.jpg';
+import liar from '../img/assets/liar_liar.jpg';
+import ace from '../img/assets/ace1.jpg';
+import bb2 from '../img/assets/bb2.jpg';
+import i1 from '../img/assets/i1.jpg';
+import i2 from '../img/assets/i2.jpg';
+import mm from '../img/assets/MammaMia.jpg';
+import dracula from '../img/assets/dracula.jpg';
+import h from '../img/assets/h.jpg';
+import gwh from '../img/assets/gwh.jpg';
+import ss from '../img/assets/ss.jpg';
+import f from '../img/assets/f.jpg';
+import fvsj from '../img/assets/fvsj.jpg';
+
+
+export const MASK = mask;
+export const EpI = epI;
+export const EpII = epII;
+export const EpIII = epIII;
+export const EpIV = epIV;
+export const EpV = epV;
+export const EpVI = epVI;
+export const STI = stI;
+export const STII = stII;
+export const LIAR = liar;
+export const ACE = ace;
+export const BB2 = bb2;
+export const I1 = i1;
+export const I2 = i2;
+export const MM = mm;
+export const DRACULA = dracula;
+export const H = h;
+export const GWH = gwh;
+export const SS = ss;
+export const F = f;
+export const FVSJ = fvsj;
+
