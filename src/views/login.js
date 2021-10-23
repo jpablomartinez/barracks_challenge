@@ -1,21 +1,13 @@
 import * as React from 'react';
 import  Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper'
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
-import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
-import { Avatar, CssBaseline, TextField, Input } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Avatar, CssBaseline, TextField } from '@mui/material';
 
 import logo from '../img/logo.png'
-
-const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
 const theme = createTheme();
 
@@ -57,7 +49,7 @@ export default function Login() {
                                     type = 'submit'
                                     fullWidth
                                     variant = 'contained'
-                                    sx= {{mt:3, mb: 2, backgroundColor: '#646af6', borderRadius: '50px'}}
+                                    sx= {{mt:3, mb: 2, backgroundColor: '#646af6', borderRadius: '50px', height: '50px'}}
                                 >
                                     Sign In
                                 </Button>
