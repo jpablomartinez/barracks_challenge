@@ -16,12 +16,12 @@ export default function Register(){
             <Container component = 'main' maxWidth = 'xs'>
                 <CssBaseline/>
                 <Box sx = {{mt: 8, display:'flex', flexDirection:'column', alignItems: 'center', justifyContent: 'center'}}>
-                <Avatar sx = {{height: '15vmin', width: '15vmin', mb: 5}}>
-                    <img src={logo}  alt="logo" style = {{height: '15vmin'}}/>
-                </Avatar>
-                <Typography component="h1" variant="h4" sx = {{color: '#fff'}}>
-                    Create your account
-                </Typography>
+                    <Avatar sx = {{height: '15vmin', width: '15vmin', mb: 5}}>
+                        <img src={logo}  alt="logo" style = {{height: '15vmin'}}/>
+                    </Avatar>
+                    <Typography component="h1" variant="h4" sx = {{color: '#fff'}}>
+                        Create your account
+                    </Typography>
                     <Box component = 'form' sx = {{mt: 3}}>
                         <Grid container spacing = {2}>
                             <Grid item xs = {12} sm = {6}>

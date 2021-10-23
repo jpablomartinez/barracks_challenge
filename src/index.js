@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Login from './views/login';
 import Register from './views/register';
+import Admin from './views/admin';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Register />
+    <Admin />
   </React.StrictMode>,
   document.getElementById('root')
 );
