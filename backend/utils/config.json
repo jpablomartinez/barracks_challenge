@@ -1,0 +1,6 @@
+{
+    "server": {
+        "port": 12001,
+        "security": "abcdefghijklmnñopqrstuvwxyz1234567890"
+    }
+}

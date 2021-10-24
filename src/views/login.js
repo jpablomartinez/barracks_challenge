@@ -6,12 +6,26 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Avatar, CssBaseline, TextField } from '@mui/material';
-
+import axios from 'axios';
+import {setToken} from '../utils/token';
 import logo from '../img/logo.png'
 
 const theme = createTheme();
 
 export default function Login() {
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        axios.post('http://localhost:12001/login', {email: data.get('email'),password: data.get('password')})
+        .then(res => {
+            if(res.data.data === 101 || res.data.data === 100){
+                setToken(res.data.data.token);
+                //props.history.push('/');
+            }
+        });
+    }
+
     return (
         <ThemeProvider theme = {theme}>
             <Container component = 'main' maxWidth = 'sm'>
@@ -22,7 +36,7 @@ export default function Login() {
                     </Avatar>  
                     <Grid container spacing = {2} justifyContent='center' alignItems='center'>
                         <Grid item xs = {8}>
-                            <Box component = 'form' sx = {{mt: 1}}>
+                            <Box component = 'form' onSubmit= {handleSubmit} sx = {{mt: 1}}>
                                 <TextField
                                     margin = 'normal'
                                     variant = 'outlined'
@@ -55,7 +69,7 @@ export default function Login() {
                                 </Button>
                                 <Grid container justifyContent='center' alignItems='center'>
                                     <Grid item>
-                                        <Link href = '#' variant = 'body2'>
+                                        <Link href = '/register' variant = 'body2'>
                                             {"Don't have an account? Sign Up!"}
                                         </Link>
                                     </Grid>
