@@ -1,19 +1,58 @@
 const {models} = require('../models/index');
 
-const updateLogEntry = async(log_id) => {
+const updateLogEntry = async(log_id) => {    
     try{
-        const updated = await models.Log.update({
-            active: false,
-            where: {
-                log_id: log_id
-            }
-        });
-        console.log(updated);
-        return true;
-
+        await models.Log.update({active: false},{where: {log_id: log_id}})
     }
     catch(err){
         return false;
+    }
+}
+
+const getLastSessionUsers = async (req, res) => {
+    try{
+        const users = await models.Log.findAll({
+            include: {
+                model: models.User,
+                as: 'Logged',
+            },
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        });
+        const usersData = [];
+        const id = []        
+        users.forEach((u) => {
+            if(usersData.length === 0){
+                if(u.Logged[0].user_type !== 0){
+                    usersData.push(getUserData(u,1));
+                    id.push(u.Logged[0].user_id);
+                }                
+            }
+            else {
+                if(!id.includes(u.Logged[0].user_id)) {     
+                    if(u.Logged[0].user_type !== 0) {
+                        usersData.push(getUserData(u, id.length+1));
+                        id.push(u.Logged[0].user_id);
+                    }                       
+                }
+            }
+        });
+        return res.status(200).json({data: 100, users: usersData});
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).json({data: 103});
+    }
+}
+
+function getUserData(object, index){
+    return {
+        name: object.Logged[0].firstname + ' ' + object.Logged[0].lastname,
+        email: object.Logged[0].email,
+        connection: object.createdAt,
+        device: object.device,
+        id: index
     }
 }
 
@@ -26,8 +65,7 @@ const isUserLogged = async (id) => {
                 as: 'Logged',
                 where: {user_id: id},
             }
-        });
-        console.log(r);
+        });        
         return r;
 
     }
@@ -46,7 +84,7 @@ const createLogEntry = async (user_id, device)=> {
         await models.UserLog.create({
             user_id: user_id,
             log_id: entry_log.log_id
-        });
+        });        
         return entry_log.log_id;
     }
     catch(err){
@@ -57,5 +95,6 @@ const createLogEntry = async (user_id, device)=> {
 module.exports = {
     isUserLogged,
     createLogEntry,
-    updateLogEntry
+    updateLogEntry,
+    getLastSessionUsers
 }

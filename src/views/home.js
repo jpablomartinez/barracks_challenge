@@ -9,9 +9,12 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { CssBaseline, Avatar } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Button from '@mui/material/Button';
+import { getToken, getUserData, logout } from '../utils/token';
 import logo from '../img/logo.png'
 import {MASK, EpI, EpII, EpIII, EpIV, EpV, EpVI, STI, STII, LIAR, ACE, BB2, I1, I2, MM, DRACULA, H, GWH, SS, F, FVSJ} from '../utils/posters';
 import Movie from '../components/movie';
+import axios from 'axios';
 
 const theme = createTheme();
 
@@ -25,6 +28,27 @@ const AppBar = styled(MuiAppBar, {
 
 
 export default function Home(){
+
+    const [username, setUsername] = React.useState('');
+    const [admin, setAdmin] = React.useState(false);
+
+    React.useEffect(() => {
+        const userData = getUserData(); 
+        if(userData.user_type === 0) setAdmin(true);
+        console.log(userData.user_type);
+        setUsername(userData.firstname);                                          
+    }, []);
+
+    const handleLogout = () => {             
+        axios.post('http://localhost:12001/logout', {token: getToken()})
+        .then((r) => {
+            logout();
+        })
+    }
+
+    const handleRoute = () => {
+        window.location.href = '/admin';
+    }
 
     return (
         <ThemeProvider theme = {theme}>
@@ -44,15 +68,22 @@ export default function Home(){
                         >                        
                             BBStream
                         </Typography>
-                        <IconButton color="inherit">
+                        {admin ? 
+                            <Button variant = 'contained' color = 'secondary' onSubmit={handleRoute} sx = {{mr: 2}}>
+                                Admin
+                            </Button>
+                            :
+                            <div></div>                   
+                        }
+                        <IconButton color="inherit" onClick={handleLogout}>
                             <ExitToAppIcon />
-                        </IconButton>
+                        </IconButton>                   
                     </Toolbar>
                 </AppBar>
                 
                 <Container sx = {{mt: 12, mb: 4}}>
                     <Typography component="h1" variant="h5" sx = {{color: '#ababab'}}>
-                        Welcome, Juanpablo
+                        Welcome, {username}
                     </Typography>
                     <Grid container spacing = {2} sx = {{mb: 2, mt: 2}}>
                         <Movie movie = {EpI}/>

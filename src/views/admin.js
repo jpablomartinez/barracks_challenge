@@ -13,6 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Paper from '@mui/material/Paper';
 import logo from '../img/logo.png'
+import axios from 'axios';
+import { getToken } from '../utils/token';
 const theme = createTheme();
 
 const useStyles = makeStyles({
@@ -33,24 +35,34 @@ const AppBar = styled(MuiAppBar, {
 
 
 const columns = [
-    {field: 'id', headerName: 'ID', width: 100, headerClassName: 'super-app-theme--header',},
-    {field: 'username', headerName: 'Username', width: 150, headerClassName: 'super-app-theme--header',},
-    {field: 'firstname', headerName: 'First Name', width: 150, headerClassName: 'super-app-theme--header',},
-    {field: 'lastname', headerName: 'Last Name', width: 150, headerClassName: 'super-app-theme--header',},
-    {field: 'email', headerName: 'Email', width: 250, headerClassName: 'super-app-theme--header',},
-    {field: 'lastConnection', headerName: 'Last Connection', width: 220, headerClassName: 'super-app-theme--header',},
+    {field: 'id', headerName: 'ID', width: 100, headerClassName: 'super-app-theme--header',},    
+    {field: 'name', headerName: 'Name', width: 250, headerClassName: 'super-app-theme--header',},    
+    {field: 'email', headerName: 'Email', width: 200, headerClassName: 'super-app-theme--header',},
+    {field: 'connection', headerName: 'Last Connection', width: 220, headerClassName: 'super-app-theme--header',},
     {field: 'device', headerName: 'Device', width: 120, headerClassName: 'super-app-theme--header',},
 ];
 
-const rows = [
-    {id:1, username: 'Krod', firstname: 'Juanpablo', lastname: 'Martínez Colombo', email: 'jp.martinez.colombo@gmail.com', lastConnection: '23/10/2021 00:00:00', device: 'Desktop'},
-    {id:2, username: 'Dani', firstname: 'Daniela', lastname: 'Martínez Colombo', email: 'dani@gmail.com', lastConnection: '20/10/2021 00:00:00', device: 'Mobile'},
-    {id:3, username: 'Samy', firstname: 'Samantha', lastname: 'Martínez Colombo', email: 'samy@gmail.com', lastConnection: '22/10/2021 00:00:00', device: 'Desktop'},
-    {id:4, username: 'Amanda', firstname: 'Amanda', lastname: 'Martínez Colombo', email: 'amanda@gmail.com', lastConnection: '19/10/2021 00:00:00', device: 'Desktop'},
-
-];
-
 export default function Home(){
+
+    const [users, setUsersData] = React.useState([]);
+
+    React.useEffect(() => {
+        const token = getToken();
+        axios.get('http://localhost:12001/getUsers',
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+        )
+        .then(r => {                       
+            if(r.data.data === 100){                
+                setUsersData(r.data.users);
+            } 
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    },[]);
+
     const classes = useStyles();
 
     return (
@@ -78,10 +90,10 @@ export default function Home(){
                 </AppBar>
                 <Container maxWidth = 'lg' sx = {{mt: 20, mb: 4}}>
                     <Grid container>
-                        <Grid item xs = {12} md = {8} lg = {12}>
+                        <Grid item xs = {12} md = {8} lg = {10}>
                             <Paper sx = {{p:2, display: 'flex', flexDirection: 'column', height: 450}}>
-                                <div style = {{height: 400, width: '100%'}} className={classes.root}>
-                                    <DataGrid rows = {rows} columns = {columns} pageSize = {5} rowsPerPageOptions = {[5]}/>
+                                <div style = {{height: 400, width: '97%'}} className={classes.root}>
+                                    <DataGrid rows = {users} columns = {columns} pageSize = {5} rowsPerPageOptions = {[5]}/>
                                 </div>
                             </Paper>
                         </Grid>

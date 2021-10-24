@@ -1,5 +1,5 @@
 const { models } = require('../models/index');
-const { createToken } = require('../utils/create_token');
+const { createToken, decodeToken } = require('../utils/create_token');
 const logged = require('./log_controller');
 
 const login = async (req, res) => {
@@ -16,12 +16,15 @@ const login = async (req, res) => {
             const userLogged = await logged.isUserLogged(user.user_id);                
             if(userLogged.length > 0){
                 await logged.updateLogEntry(userLogged.log_id);
-                await logged.createLogEntry(user.user_id, 'desktop');
-                return res.status(200).json({data: 100});
+                const r = await logged.createLogEntry(user.user_id, 'desktop');
+                u.log_id = r;
+                console.log(u);
+                return res.status(200).json({data: 100, token: createToken(u)});
             }
             else {                    
                 const r = await logged.createLogEntry(user.user_id, 'desktop');
-                u.log_id = r.log_id;
+                u.log_id = r;
+                console.log(u);
                 return res.status(200).json({data: 101, user: u, token: createToken(u)});
             }
         }
@@ -33,10 +36,10 @@ const login = async (req, res) => {
     }
 }
 
-const logout = async (req, res) =>{
-    //get id from token
-    const log_id = 1;
-    await logged.updateLogEntry(log_id);
+const logout = async (req, res) =>{    
+    console.log(req.body.token);
+    const t = decodeToken(req.body.token);    
+    await logged.updateLogEntry(t.user.log_id);
     return res.status(200).json({data: true})
 }
 

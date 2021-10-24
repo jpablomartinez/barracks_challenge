@@ -4,6 +4,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './index.css';
 import Login from './views/login';
 import Register from './views/register';
+import Home from './views/home';
+import Admin from './views/admin';
 import { middleware, getToken, logout } from './utils/token';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
@@ -29,7 +31,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path = '/login' component= {Login}></Route>
           <Route path = '/register' component= {Register}></Route>
-          <Route path = '/' component = {() => middleware()}></Route>
+          <Route path = '/' component = {() => middleware(Admin)}></Route>
         </Switch>
       </BrowserRouter>
     </Suspense>

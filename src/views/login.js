@@ -6,24 +6,56 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Avatar, CssBaseline, TextField } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import axios from 'axios';
 import {setToken} from '../utils/token';
 import logo from '../img/logo.png'
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Login(props) {
+
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const [color, setColor] = React.useState('success');
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpen(false);
+    };
+
+    const handleMessage = (msg, color) => {
+        setMessage(msg);
+        setColor(color);
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         axios.post('http://localhost:12001/login', {email: data.get('email'),password: data.get('password')})
         .then(res => {
-            if(res.data.data === 101 || res.data.data === 100){
-                setToken(res.data.data.token);
-                //props.history.push('/');
+            if(res.data.data === 101 || res.data.data === 100){        
+                handleMessage('Login successful', 'success');
+                setOpen(true);        
+                setToken(res.data.token);
+                props.history.push('/');
             }
-        });
+            else if(res.data.data === 102){
+                handleMessage('User does not exists', 'warning');
+                setOpen(true);
+            }
+            else if(res.data.data === 103){
+                handleMessage('Server error', 'error');
+                setOpen(true);
+            }
+        })
+        .catch(err => {
+            handleMessage('Server error', 'error');
+            setOpen(true);
+        })
     }
 
     return (
@@ -31,6 +63,11 @@ export default function Login() {
             <Container component = 'main' maxWidth = 'sm'>
                 <CssBaseline/>
                 <Box sx = {{marginTop:8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center'}}>
+                        <Alert onClose={handleClose} severity={color} sx={{ width: '100%' }}>
+                            {message}
+                        </Alert>
+                    </Snackbar>
                     <Avatar sx = {{height: '15vmin', width: '15vmin'}}>
                         <img src={logo}  alt="logo" style = {{height: '15vmin'}}/>
                     </Avatar>  

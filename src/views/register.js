@@ -22,7 +22,6 @@ export default function Register(){
         if (reason === 'clickaway') {
           return;
         }
-    
         setOpen(false);
     };
 
@@ -43,15 +42,15 @@ export default function Register(){
             if(res.data.data === 100){
                 //show succesful snackbar
                 //this.setState({message: 'Congrats! user was created'});
-                handleMessage('Congrats! user was created', 'success')
+                handleMessage('Congrats! user was created', 'success');
                 setOpen(true);          
             }
             else if(res.data.data === 101){
-                handleMessage('user already exists', 'info')
+                handleMessage('user already exists', 'info');
                 setOpen(true);
             }
             else {                
-                handleMessage('an error ocurred. Try again', 'error')
+                handleMessage('an error ocurred. Try again', 'error');
                 setOpen(true);        
             }
         })

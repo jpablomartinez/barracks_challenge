@@ -22,13 +22,13 @@ export const getUserData = () => {
     const token = getToken();
     const data = jwt_decode(token);
     return {
-        firstname: data.firstname,
-        user_type: data.user_type,
-        log_id: data.log_id
+        firstname: data.user.firstname,
+        user_type: data.user.type,
+        log_id: data.user.log_id
     }
 }
 
 export const logout = () => {
     window.localStorage.removeItem('token');
-    window.location.href('/');
+    window.location.href = '/';
 }
