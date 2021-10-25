@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const auth = async (req, res, next) => {    
     try{
         const token = req.header('Authorization').replace('Bearer ', '');
+        const dec = jwt.decode(JSON.parse(token));
         if(req.originalUrl === '/getUsers' && decode.user.type === 0) next();
          else return res.status(500).json({data: 101, err: 'invalid route'});
         /*jwt.verify(token, 'bbstream', function(err, decode) {      
