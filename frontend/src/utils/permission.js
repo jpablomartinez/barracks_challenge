@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import jwt_decode from 'jwt_decode';
+import jwt_decode from 'jwt-decode';
 
 export const hasPermission = (roles = []) => {
     if(roles.length > 0){
