@@ -33,7 +33,7 @@ export default function Register(){
     const handleSubmit2 = (event) => {        
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        axios.post('http://localhost:12001/register', {
+        axios.post('https://api.devmenestrello.com/register', {
             firstname: data.get('firstname'),
             lastname: data.get('lastname'),
             email: data.get('email'),

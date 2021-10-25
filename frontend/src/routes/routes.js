@@ -9,7 +9,7 @@ const ADMIN = 0;
 const Routes = () => (
     <Switch>
         <BaseRouting path = '/' exact component={Home}></BaseRouting>
-        <BaseRouting path = '/admin' component = {Admin} ></BaseRouting>        
+              
     </Switch>
 );
 

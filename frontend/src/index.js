@@ -32,6 +32,7 @@ ReactDOM.render(
           <Route exact path = '/login' component= {Login}></Route>
           <Route path = '/register' component= {Register}></Route>
           <Route path = '/' component = {() => middleware(Admin)}></Route>
+          <Route path = '/admin' component = {() => middleware(Admin)}></Route>
         </Switch>
       </BrowserRouter>
     </Suspense>

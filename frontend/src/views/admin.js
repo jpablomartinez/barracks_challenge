@@ -48,7 +48,8 @@ export default function Home(){
 
     React.useEffect(() => {
         const token = getToken();
-        axios.get('http://localhost:12001/getUsers',
+        console.log(token)
+        axios.get('https://api.devmenestrello.com/getUsers',
             {
                 headers: { Authorization: `Bearer ${token}` }
             }

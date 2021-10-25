@@ -40,7 +40,7 @@ export default function Home(){
     }, []);
 
     const handleLogout = () => {             
-        axios.post('http://localhost:12001/logout', {token: getToken()})
+        axios.post('https://api.devmenestrello.com/logout', {token: getToken()})
         .then((r) => {
             logout();
         })
